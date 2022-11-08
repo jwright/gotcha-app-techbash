@@ -12,13 +12,13 @@ const styles = StyleSheet.create({
 
 import ArenaCard from '../ArenaCard';
 
-const ArenaList = ({ arenas }) => {
+const ArenaList = ({ arenas, navigation }) => {
   if (!arenas) return null;
 
   return (
     <View style={styles.container}>
       {arenas.map(arena => (
-        <ArenaCard key={arena.id} arena={arena} />
+        <ArenaCard key={arena.id} arena={arena} navigation={navigation} />
       ))}
     </View>
   );

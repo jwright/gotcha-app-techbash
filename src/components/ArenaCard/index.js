@@ -15,15 +15,21 @@ const styles = StyleSheet.create({
   },
 });
 
-const ArenaCard = ({ arena: { locationName, streetAddress1, streetAddress2, city, state, zipCode } }) => (
-  <View style={styles.container}>
-    <TouchableOpacity styles={styles.button} onPress={() => console.log(`They selected ${locationName}`)}>
-      <Text>{locationName}</Text>
-      <Text>{streetAddress1}</Text>
-      {streetAddress2 && <Text>{streetAddress1}</Text>}
-      <Text>{city}, {state} {zipCode}</Text>
-    </TouchableOpacity>
-  </View>
-);
+const ArenaCard = ({ arena: { locationName, streetAddress1, streetAddress2, city, state, zipCode }, navigation }) => {
+  const handleSelectArena = () => {
+    navigation.navigate("Registration");
+  };
+
+  return (
+    <View style={styles.container}>
+      <TouchableOpacity styles={styles.button} onPress={handleSelectArena}>
+        <Text>{locationName}</Text>
+        <Text>{streetAddress1}</Text>
+        {streetAddress2 && <Text>{streetAddress1}</Text>}
+        <Text>{city}, {state} {zipCode}</Text>
+      </TouchableOpacity>
+    </View>
+  );
+};
 
 export default ArenaCard;

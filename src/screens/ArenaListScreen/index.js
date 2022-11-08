@@ -1,24 +1,19 @@
 import React from "react";
-import { StyleSheet, Text, View } from 'react-native';
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+import ArenaList from '../../components/ArenaList';
 
+import { useQuery } from '@apollo/client';
+
+import ArenasQuery from '../../queries/Arenas';
 
 const ArenaListScreen = ({ route, location }) => {
   const { location: { latitude, longitude }} = route.params;
 
-  return (
-    <View style={styles.container}>
-      <Text>Your location is {latitude}/{longitude}</Text>
-    </View>
-  );
+  const { loading, error, data } = useQuery(ArenasQuery, { variables: { latitude, longitude }});
+
+  if (loading || error) return null;
+
+  return <ArenaList arenas={data.arenas} />;
 };
 
 export default ArenaListScreen;

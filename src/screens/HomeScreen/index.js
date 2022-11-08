@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Button, StyleSheet, Text, View } from 'react-native';
 
 import * as Location from 'expo-location';
@@ -13,16 +13,20 @@ const styles = StyleSheet.create({
 });
 
 const HomeScreen = ({ navigation })  => {
+  useEffect(() => {
+    const areServicesEnabled = async () => await Location.hasServicesEnabledAsync();
+
+    if (areServicesEnabled()) navigate();
+  }, []);
+
   const handleFindNearbyArenas = async () => {
     const { granted } = await Location.requestForegroundPermissionsAsync();
 
-    if (granted) {
-      const { coords: { latitude, longitude }} = await Location.getCurrentPositionAsync();
-      navigate({latitude, longitude});
-    }
+    if (granted) navigate();
   }
 
-  const navigate = ({latitude, longitude}) => {
+  const navigate = async () => {
+    const { coords: { latitude, longitude }} = await Location.getCurrentPositionAsync();
     navigation.navigate("ArenaList", { location: { latitude, longitude }});
   }
 
